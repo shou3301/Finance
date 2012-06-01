@@ -16,7 +16,7 @@ public class SignupForm {
 	
 	@Override
 	public String toString() {
-		return firstName + lastName + password1;
+		return "User: " + userName + " is trying to signup.";
 	}
 
 	public String getPassword1() {

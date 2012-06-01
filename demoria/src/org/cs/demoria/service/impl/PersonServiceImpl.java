@@ -6,6 +6,7 @@ import org.cs.demoria.dao.PersonDao;
 import org.cs.demoria.model.Person;
 import org.cs.demoria.service.PersonService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("personService")
 public class PersonServiceImpl implements PersonService {
@@ -25,6 +26,14 @@ public class PersonServiceImpl implements PersonService {
 	@Resource(name="personDao")
 	public void setPersonDao(PersonDao personDao) {
 		this.personDao = personDao;
+	}
+
+	@Override
+	@Transactional
+	public void add(Person person) {
+	
+		personDao.save(person);
+		
 	}
 
 }

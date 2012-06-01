@@ -19,28 +19,24 @@ public class Person {
 	@Column(name="id")
 	private Integer id;
 	
-	@Version
-	@Column(name="version")
-	private Integer version;
-	
 	@NotNull
-	@Pattern(regexp=".+", message="Last name must not be empty!")
+	//@Pattern(regexp=".+", message="Last name must not be empty!")
 	private String firstName;
 	
 	@NotNull
-	@Pattern(regexp=".+", message="First name must not be empty!")
+	//@Pattern(regexp=".+", message="First name must not be empty!")
 	private String lastName;
 	
 	@NotNull
-	@Pattern(message = "Email invalid", regexp = "[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+	//@Pattern(message = "Email invalid", regexp = "[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
 	private String email;
 
 	@NotNull
-	@Pattern(regexp = ".+", message = "Password must not be empty!")
+	//@Pattern(regexp = ".+", message = "Password must not be empty!")
 	private String password;
 	
-	@Valid
-	@NotNull
+	//@Valid
+	//@NotNull
 	@Embedded
 	private Address address;
 	
@@ -50,14 +46,6 @@ public class Person {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Integer getVersion() {
-		return version;
-	}
-
-	public void setVersion(Integer version) {
-		this.version = version;
 	}
 
 	public String getFirstName() {

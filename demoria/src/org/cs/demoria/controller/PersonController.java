@@ -4,6 +4,8 @@ import javax.annotation.Resource;
 import javax.validation.Validation;
 import javax.validation.Validator;
 
+import org.cs.demoria.model.Address;
+import org.cs.demoria.model.Person;
 import org.cs.demoria.service.PersonService;
 import org.cs.demoria.vo.SignupForm;
 import org.springframework.stereotype.Controller;
@@ -36,9 +38,24 @@ public class PersonController {
 	public String signup(SignupForm signupForm, BindingResult result,
 			ModelMap model) {
 		
-		System.out.println(signupForm);
+		if (signupForm.getPassword1().equals(signupForm.getPassword2())) {
+			Address addr = new Address();
+			addr.setCity(signupForm.getCity());
+			addr.setState(signupForm.getState());
+			addr.setStreetName(signupForm.getStreetName());
+			addr.setStreetNum(signupForm.getStreetNum());
+			addr.setZipCode(signupForm.getZipcode());
+			Person person = new Person();
+			person.setAddress(addr);
+			person.setEmail(signupForm.getEmail());
+			person.setFirstName(signupForm.getFirstName());
+			person.setLastName(signupForm.getLastName());
+			person.setPassword(signupForm.getPassword1());
+			
+			personService.add(person);
+		}
 		
-		return "index";
+		return "person/home";
 	}
 
 	public PersonService getPersonService() {

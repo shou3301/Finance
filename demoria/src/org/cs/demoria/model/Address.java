@@ -2,12 +2,11 @@ package org.cs.demoria.model;
 
 public class Address {
 
-	String streetName;
-	String streetNum;
-	String city;
-	String zipCode;
-	String state;
-	String country;
+	private String streetName;
+	private String streetNum;
+	private String city;
+	private String zipCode;
+	private String state;
 
 	public String getStreetName() {
 		return streetName;
@@ -47,14 +46,6 @@ public class Address {
 
 	public void setState(String state) {
 		this.state = state;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
 	}
 
 }

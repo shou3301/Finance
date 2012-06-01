@@ -42,4 +42,14 @@ public class PersonDaoImpl implements PersonDao {
 		this.sessionFactory = sessionFactory;
 	}
 
+	@Override
+	public void save(Person person) {
+		
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		session.save(person);
+		session.getTransaction().commit();
+		
+	}
+
 }
