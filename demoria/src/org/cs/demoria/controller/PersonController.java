@@ -7,6 +7,7 @@ import javax.validation.Validator;
 import org.cs.demoria.model.Address;
 import org.cs.demoria.model.Person;
 import org.cs.demoria.service.PersonService;
+import org.cs.demoria.vo.LoginForm;
 import org.cs.demoria.vo.SignupForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -56,6 +57,21 @@ public class PersonController {
 		}
 		
 		return "person/home";
+	}
+	
+	@RequestMapping(value="login", method=RequestMethod.GET)
+	@ModelAttribute("loginForm")
+	public LoginForm getLoginForm() {
+		return new LoginForm();
+	}
+	
+	@RequestMapping(value="person/login", method=RequestMethod.POST)
+	public String login(LoginForm loginForm, BindingResult result,
+			ModelMap model) {
+		if (personService.loginCheck(loginForm.getEmail(), loginForm.getPassword()))
+			return "person/home";
+		else
+			return "person/loginerror";
 	}
 
 	public PersonService getPersonService() {

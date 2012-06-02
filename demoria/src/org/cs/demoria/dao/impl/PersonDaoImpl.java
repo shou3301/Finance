@@ -16,8 +16,8 @@ public class PersonDaoImpl implements PersonDao {
 
 	private SessionFactory sessionFactory;
 
-	@Override
-	public Person sqlFindById(Integer id) {
+
+	public Person sqllFindById(Integer id) {
 		
 		Session session = getSessionFactory().getCurrentSession();
 		
@@ -50,6 +50,20 @@ public class PersonDaoImpl implements PersonDao {
 		session.save(person);
 		session.getTransaction().commit();
 		
+	}
+
+	@Override
+	public Person findByEmail(String email) {
+
+		Session session = getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
+		Query query = session.createQuery("Select p from Person p where p.email = :email").setParameter("email", email);
+		Person person = (Person) query.uniqueResult();
+		
+		session.getTransaction().commit();
+		
+		return person;
 	}
 
 }

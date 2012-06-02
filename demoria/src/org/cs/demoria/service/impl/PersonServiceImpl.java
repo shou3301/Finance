@@ -12,12 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class PersonServiceImpl implements PersonService {
 
 	private PersonDao personDao;
-	
-	@Override
-	public Person findById(Integer id) {
-		
-		return personDao.sqlFindById(id);
-	}
 
 	public PersonDao getPersonDao() {
 		return personDao;
@@ -34,6 +28,16 @@ public class PersonServiceImpl implements PersonService {
 	
 		personDao.save(person);
 		
+	}
+
+	@Override
+	@Transactional
+	public boolean loginCheck(String email, String password) {
+
+		if (password.equals(personDao.findByEmail(email).getPassword()))
+			return true;
+		
+		return false;
 	}
 
 }
