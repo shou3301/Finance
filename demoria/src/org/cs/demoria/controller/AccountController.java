@@ -1,14 +1,18 @@
 package org.cs.demoria.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.cs.demoria.model.Account;
 import org.cs.demoria.model.Investment;
 import org.cs.demoria.model.Person;
 import org.cs.demoria.service.AccountService;
+import org.cs.demoria.vo.LoginForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,11 +25,23 @@ public class AccountController {
 	private AccountService accountService;
 	
 	@RequestMapping(value="accounts", method=RequestMethod.GET)
-	public String showAllAccounts(Model model) {
+	public String showAllAccounts(HttpSession session, Model model) {
+		
+		Person person = (Person) session.getAttribute("currentUser");
 		
 		List<Account> accounts = accountService.getAllAccounts();
+		Map<Account, Boolean> apMap = new HashMap<Account, Boolean>();
 		
-		model.addAttribute("accounts", accounts);
+		for (Account a : accounts) {
+			if (a.getOwners().contains(person))
+				apMap.put(a, true);
+			else
+				apMap.put(a, false);
+		}
+		
+		model.addAttribute("user", person);
+		model.addAttribute("accounts", apMap);
+		//model.addAttribute("accounts", accounts);
 		
 		return "account/all";
 	}
@@ -34,11 +50,6 @@ public class AccountController {
 	public String showAccountOwners(@PathVariable("aid") Integer id, Model model) {
 		
 		Set<Person> owners = accountService.getOwnersById(id);
-		
-		if(owners.isEmpty())
-			System.out.println("Empty");
-		else
-			System.out.println("Not Empty");
 		
 		model.addAttribute("owners", owners);
 		

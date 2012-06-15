@@ -1,6 +1,7 @@
 package org.cs.demoria.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import javax.validation.Validation;
 import javax.validation.Validator;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 //@RequestMapping("/person/**")
@@ -62,10 +64,12 @@ public class PersonController {
 	}
 	
 	@RequestMapping(value="login", method=RequestMethod.POST)
-	public String login(LoginForm loginForm, BindingResult result,
+	public String login(LoginForm loginForm, BindingResult result, HttpSession session,
 			ModelMap model) {
-		if (personService.loginCheck(loginForm.getUserName(), loginForm.getPassword()))
+		if (personService.loginCheck(loginForm.getUserName(), loginForm.getPassword())) {
+			session.setAttribute("currentUser", personService.findByName(loginForm.getUserName()));
 			return "redirect:/" + loginForm.getUserName() + "/home";
+		}
 		else
 			return "loginerror";
 	}

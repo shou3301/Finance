@@ -12,13 +12,14 @@
 </head>
 <body>
 	<h1>All Accounts</h1>
-	<table width="600px">
+	<table width="800px">
 		<tr>
 			<thead>
 				<th>Id</th>
 				<th>Name</th>
 				<th>Owner</th>
 				<th>Investments</th>
+				<th>Operations</th>
 				<th />
 				<th />
 				<th />
@@ -26,10 +27,20 @@
 		</tr>
 		<c:forEach items="${accounts}" var="account">
 			<tr>
-				<td>${account.id}</td>
-				<td>${account.name}</td>
-				<td><a href="/demoria/${account.id}/owners">owners</a></td>
-				<td><a href="/demoria/${account.id}/investments">investments</a></td>
+				<td>${account.key.id}</td>
+				<td>${account.key.name}</td>
+				<td><a href="/demoria/${account.key.id}/owners">owners</a></td>
+				<td><a href="/demoria/${account.key.id}/investments">investments</a></td>
+				<td>
+					<c:choose>
+						<c:when test="${account.value}=='true'">
+							<a href="/demoria/${user.id}/leaveaccount/${account.key.id}">Leave</a>
+						</c:when>
+						<c:otherwise>
+							<a href="/demoria/${user.id}/addaccount/${account.key.id}">Add</a>
+						</c:otherwise>
+					</c:choose>
+				</td>
 			</tr>
 		</c:forEach>
 	</table>

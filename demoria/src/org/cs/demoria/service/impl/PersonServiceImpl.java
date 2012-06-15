@@ -40,4 +40,9 @@ public class PersonServiceImpl implements PersonService {
 		return false;
 	}
 
+	@Override
+	public Person findByName(String userName) {
+		return personDao.findByName(userName);
+	}
+
 }
