@@ -53,12 +53,12 @@ public class PersonDaoImpl implements PersonDao {
 	}
 
 	@Override
-	public Person findByEmail(String email) {
+	public Person findByName(String userName) {
 
 		Session session = getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		
-		Query query = session.createQuery("Select p from Person p where p.email = :email").setParameter("email", email);
+		Query query = session.createQuery("Select p from Person p where p.userName = :userName").setParameter("userName", userName);
 		Person person = (Person) query.uniqueResult();
 		
 		session.getTransaction().commit();

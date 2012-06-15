@@ -32,9 +32,9 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	@Transactional
-	public boolean loginCheck(String email, String password) {
+	public boolean loginCheck(String userName, String password) {
 
-		if (password.equals(personDao.findByEmail(email).getPassword()))
+		if (password.equals(personDao.findByName(userName).getPassword()))
 			return true;
 		
 		return false;

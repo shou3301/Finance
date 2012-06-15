@@ -10,6 +10,7 @@ import org.cs.demoria.service.PersonService;
 import org.cs.demoria.vo.LoginForm;
 import org.cs.demoria.vo.SignupForm;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,24 +19,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/person/**")
+//@RequestMapping("/person/**")
 public class PersonController {
 	
 	private PersonService personService;
-		
-	/*@RequestMapping(value="person/{id}", method=RequestMethod.GET)
-	public String show(@PathVariable("id") Integer id, ModelMap modelMap) {
-		modelMap.addAttribute("person", personService.findById(id));
-		return null;
-	}*/
 	
-	@RequestMapping(value = "signup", method = RequestMethod.GET)
+	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	@ModelAttribute("signupForm")
 	public SignupForm getSignup() {
 		return new SignupForm();
 	}
 	
-	@RequestMapping(value = "signup", method = RequestMethod.POST)
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signup(SignupForm signupForm, BindingResult result,
 			ModelMap model) {
 		
@@ -47,6 +42,7 @@ public class PersonController {
 			addr.setStreetNum(signupForm.getStreetNum());
 			addr.setZipCode(signupForm.getZipcode());
 			Person person = new Person();
+			person.setUserName(signupForm.getUserName());
 			person.setAddress(addr);
 			person.setEmail(signupForm.getEmail());
 			person.setFirstName(signupForm.getFirstName());
@@ -56,7 +52,7 @@ public class PersonController {
 			personService.add(person);
 		}
 		
-		return "person/home";
+		return "redirect:" + signupForm.getUserName() + "/home";
 	}
 	
 	@RequestMapping(value="login", method=RequestMethod.GET)
@@ -65,13 +61,19 @@ public class PersonController {
 		return new LoginForm();
 	}
 	
-	@RequestMapping(value="person/login", method=RequestMethod.POST)
+	@RequestMapping(value="login", method=RequestMethod.POST)
 	public String login(LoginForm loginForm, BindingResult result,
 			ModelMap model) {
-		if (personService.loginCheck(loginForm.getEmail(), loginForm.getPassword()))
-			return "person/home";
+		if (personService.loginCheck(loginForm.getUserName(), loginForm.getPassword()))
+			return "redirect:/" + loginForm.getUserName() + "/home";
 		else
-			return "person/loginerror";
+			return "loginerror";
+	}
+	
+	@RequestMapping(value="/{uname}/home", method=RequestMethod.GET)
+	public String showHome(@PathVariable("uname") String uname, Model model) {
+		model.addAttribute("uname", uname);
+		return "home";
 	}
 
 	public PersonService getPersonService() {

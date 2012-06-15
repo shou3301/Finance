@@ -11,8 +11,8 @@
 	<li>
 		<h2>Welcome</h2>
 		<ul>
-			<li><a href="/demoria/person/signup">Signup</a></li>
-			<li><a href="/demoria/person/login">Login</a></li>
+			<li><a href="/demoria/signup">Signup</a></li>
+			<li><a href="/demoria/login">Login</a></li>
 		</ul>
 	</li>
 	<h2>Welcome to the Spring Finance Application!</h2>

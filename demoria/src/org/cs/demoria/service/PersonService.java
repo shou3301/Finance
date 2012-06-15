@@ -4,7 +4,7 @@ import org.cs.demoria.model.Person;
 
 public interface PersonService {
 	
-	public boolean loginCheck(String email, String password);
+	public boolean loginCheck(String userName, String password);
 	public void add(Person person);
 
 }

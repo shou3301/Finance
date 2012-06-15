@@ -2,12 +2,40 @@ package org.cs.demoria.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+@Entity
+@Table(name="INVESTMENT")
 public class Investment {
 	
-	Double unit;
-	Double initUnitPrice;
-	Date transactionDate;
-	Product product;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="ID")
+	private Integer id;
+	
+	@NotNull
+	@Column(name="UNIT")
+	private Double unit;
+	
+	@NotNull
+	@Column(name="INIT_UNIT_PRICE")
+	private Double initUnitPrice;
+	
+	@NotNull
+	@Column(name="TRANSACTION_DATE")
+	private Date transactionDate;
+	
+	@NotNull
+	@OneToOne(cascade = CascadeType.ALL)
+	private Product product;
 
 	public Double getUnit() {
 		return unit;
@@ -39,6 +67,14 @@ public class Investment {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 }

@@ -4,7 +4,7 @@ import org.cs.demoria.model.Person;
 
 public interface PersonDao {
 	
-	public Person findByEmail(String email);
+	public Person findByName(String userName);
 	public void save(Person person);
 
 }
