@@ -33,11 +33,11 @@
 				<td><a href="/demoria/${account.key.id}/investments">investments</a></td>
 				<td>
 					<c:choose>
-						<c:when test="${account.value}=='true'">
+						<c:when test="${account.value==true}">
 							<a href="/demoria/${user.id}/leaveaccount/${account.key.id}">Leave</a>
 						</c:when>
 						<c:otherwise>
-							<a href="/demoria/${user.id}/addaccount/${account.key.id}">Add</a>
+							<a href="/demoria/${user.id}/addaccount/${account.key.id}">Join</a>
 						</c:otherwise>
 					</c:choose>
 				</td>

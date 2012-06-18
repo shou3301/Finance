@@ -48,6 +48,7 @@ public class Person {
 	@Column(name="PASSWORD")
 	private String password;
 	
+	@NotNull
 	@Embedded
 	private Address address;
 	
@@ -126,6 +127,15 @@ public class Person {
 
 	public void setAccountList(Set<Account> accountList) {
 		this.accountList = accountList;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		Person p = (Person)o;
+		if (this.userName.equals(p.getUserName()))
+			return true;
+		else
+			return false;
 	}
 
 }

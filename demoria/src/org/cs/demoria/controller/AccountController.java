@@ -12,9 +12,13 @@ import org.cs.demoria.model.Account;
 import org.cs.demoria.model.Investment;
 import org.cs.demoria.model.Person;
 import org.cs.demoria.service.AccountService;
+import org.cs.demoria.service.PersonService;
+import org.cs.demoria.vo.AccountCreateForm;
 import org.cs.demoria.vo.LoginForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,20 +27,98 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AccountController {
 	
 	private AccountService accountService;
+	private PersonService personService;
+	
+	@RequestMapping(value="/account/create", method=RequestMethod.GET)
+	public AccountCreateForm createAccountForm() {
+		return new AccountCreateForm();
+	}
+	
+	@RequestMapping(value="/account/create", method=RequestMethod.POST)
+	public String createAccount(AccountCreateForm createAccountForm, 
+			BindingResult result, HttpSession session, ModelMap model) {
+		
+		Person manager = (Person) session.getAttribute("currentUser");
+		Account account = new Account();
+		account.setManager(manager);
+		account.setName(createAccountForm.getName());
+		
+		accountService.persistAccount(account);
+		
+		return manager.getUserName() + "/home";
+	}
+	
+	@RequestMapping(value="/{uname}/manage", method=RequestMethod.GET)
+	public String manageAccounts(@PathVariable("uname") String uname, 
+			HttpSession session, Model model) {
+		
+		List<Account> accounts = accountService.getAccountsByManager((Person)session.getAttribute("currentUser"));
+		
+		model.addAttribute("accounts", accounts);
+		
+		System.out.println(accounts);
+		
+		return "account/manage";
+	}
+	
+	@RequestMapping(value="/{uname}/{aid}/manage", method=RequestMethod.GET)
+	public String managerAccounts(@PathVariable("aid") Integer aid,
+			HttpSession session, Model model) {
+		
+		Account account = accountService.findAccountById(aid);
+		
+		// TODO add some identity authentication
+
+		model.addAttribute("account", account);
+		
+		return "account/detailmanage";
+	}
+	
+	@RequestMapping(value="/{uid}/leaveaccount/{aid}", method=RequestMethod.GET)
+	public String leaveAccount(@PathVariable("uid") Integer uid, 
+			@PathVariable("aid") Integer aid, HttpSession session, Model model) {
+		
+		Person person = (Person) session.getAttribute("currentUser");
+		
+		accountService.quitAccount(person, aid);
+		
+		model.addAttribute("uname", person.getUserName());
+		model.addAttribute("aid", aid);
+		
+		return "account/leave";
+	}
+	
+	@RequestMapping(value="/{uid}/addaccount/{aid}", method=RequestMethod.GET)
+	public String joinAccount(@PathVariable("uid") Integer uid, 
+			@PathVariable("aid") Integer aid, HttpSession session, Model model) {
+		
+		Person person = (Person) session.getAttribute("currentUser");
+		
+		accountService.joinAccount(person, aid);
+		
+		model.addAttribute("uname", person.getUserName());
+		model.addAttribute("aid", aid);
+		
+		return "account/join";
+	}
 	
 	@RequestMapping(value="accounts", method=RequestMethod.GET)
 	public String showAllAccounts(HttpSession session, Model model) {
 		
 		Person person = (Person) session.getAttribute("currentUser");
 		
+		System.out.println("Person Name: " + person.getUserName());
+		
 		List<Account> accounts = accountService.getAllAccounts();
 		Map<Account, Boolean> apMap = new HashMap<Account, Boolean>();
 		
 		for (Account a : accounts) {
-			if (a.getOwners().contains(person))
-				apMap.put(a, true);
-			else
-				apMap.put(a, false);
+			boolean flag = false;
+			for (Person p : a.getOwners()) {
+				if (p.getUserName().equals(person.getUserName()))
+					flag = true;
+			}
+			apMap.put(a, flag);
 		}
 		
 		model.addAttribute("user", person);
@@ -73,6 +155,15 @@ public class AccountController {
 	@Resource(name="accountService")
 	public void setAccountService(AccountService accountService) {
 		this.accountService = accountService;
+	}
+
+	public PersonService getPersonService() {
+		return personService;
+	}
+
+	@Resource(name="personService")
+	public void setPersonService(PersonService personService) {
+		this.personService = personService;
 	}
 
 }

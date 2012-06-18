@@ -14,6 +14,8 @@
 	<ul>
 		<li><a href="/demoria/${uname}/profile">Your profile</a></li>
 		<li><a href="/demoria/${uname}/accounts">Your accounts</a></li>
+		<li><a href="/demoria/account/create">Create accounts</a></li>
+		<li><a href="/demoria/${uname}/manage">Manage your accounts</a></li>
 		<li><a href="/demoria/accounts">Show all accounts</a></li>
 	</ul>
 </body>

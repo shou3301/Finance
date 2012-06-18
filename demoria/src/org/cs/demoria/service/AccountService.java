@@ -9,9 +9,19 @@ import org.cs.demoria.model.Person;
 
 public interface AccountService {
 	
+	public Account findAccountById(Integer id);
+	
+	public void persistAccount(Account account);
+	
+	public List<Account> getAccountsByManager(Person manager);
+	
 	public void joinAccount(Person person, String accountName);
 	
 	public void quitAccount(Person person, String accountName);
+	
+	public void joinAccount(Person person, Integer aid);
+	
+	public void quitAccount(Person person, Integer aid);
 	
 	public List<Investment> getAllInvestmentByName(String accountName);
 	

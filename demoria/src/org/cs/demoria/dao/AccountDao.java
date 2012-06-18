@@ -9,6 +9,10 @@ import org.cs.demoria.model.Person;
 
 public interface AccountDao {
 	
+	public List<Account> getAccountsByManager(Person manager);
+	
+	public void saveAccount(Account account);
+	
 	public Account findByName(String accountName);
 	
 	public Account findById(Integer id);
@@ -16,6 +20,10 @@ public interface AccountDao {
 	public void insertOwnerByName(Person person, String accountName);
 	
 	public void removeOwnerByName(Person person, String accountName);
+	
+	public void insertOwnerById(Person person, Integer aid);
+	
+	public void removeOwnerById(Person person, Integer aid);
 	
 	public void deleteAccount(String accountName);
 	

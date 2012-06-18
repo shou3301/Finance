@@ -7,6 +7,7 @@ import javax.validation.Validator;
 
 import org.cs.demoria.model.Address;
 import org.cs.demoria.model.Person;
+import org.cs.demoria.service.AccountService;
 import org.cs.demoria.service.PersonService;
 import org.cs.demoria.vo.LoginForm;
 import org.cs.demoria.vo.SignupForm;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 public class PersonController {
 	
 	private PersonService personService;
+	private AccountService accountService;
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	@ModelAttribute("signupForm")
@@ -87,6 +89,15 @@ public class PersonController {
 	@Resource(name="personService")
 	public void setPersonService(PersonService personService) {
 		this.personService = personService;
+	}
+
+	public AccountService getAccountService() {
+		return accountService;
+	}
+
+	@Resource(name="accountService")
+	public void setAccountService(AccountService accountService) {
+		this.accountService = accountService;
 	}
 
 }

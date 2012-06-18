@@ -144,4 +144,59 @@ public class AccountDaoImpl implements AccountDao {
 		this.sessionFactory = sessionFactory;
 	}
 
+	@Override
+	public void insertOwnerById(Person person, Integer aid) {
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+
+		Query query = session.createQuery("Select a from Account a where a.id = :id").setParameter("id", aid);
+		Account account = (Account)query.uniqueResult();
+		account.addOwner(person);
+		session.update(account);
+		
+		session.getTransaction().commit();
+	}
+
+	@Override
+	public void removeOwnerById(Person person, Integer aid) {
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+
+		Query query = session.createQuery("Select a from Account a where a.id = :id").setParameter("id", aid);
+		Account account = (Account)query.uniqueResult();
+		account.removeOwner(person);
+		session.update(account);
+		
+		session.getTransaction().commit();
+	}
+
+	@Override
+	public void saveAccount(Account account) {
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+
+		session.save(account);
+		
+		session.getTransaction().commit();
+	}
+
+	@Override
+	public List<Account> getAccountsByManager(Person manager) {
+
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		
+		Query query = session.createQuery("select a from Account a where a.manager.userName = :manager").setParameter("manager", manager.getUserName());
+		//Query query = session.createQuery("from Account");
+		List<Account> accounts = (List<Account>)query.list();
+		
+		if (accounts.isEmpty()) {
+			System.out.println("Empty!!!");
+		}
+		
+		session.getTransaction().commit();
+		
+		return accounts;
+	}
+
 }

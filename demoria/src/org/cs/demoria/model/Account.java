@@ -42,6 +42,10 @@ public class Account {
     )
 	private Set<Person> owners = new HashSet<Person>();
 	
+	@NotNull
+	@OneToOne
+	private Person manager;
+	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="ACCOUNT_ID")
 	private List<Investment> investments = new ArrayList<Investment>();
@@ -62,13 +66,13 @@ public class Account {
 		this.owners = owners;
 	}
 
-	/*public Person getManager() {
+	public Person getManager() {
 		return manager;
 	}
 
 	public void setManager(Person manager) {
 		this.manager = manager;
-	}*/
+	}
 
 	public List<Investment> getInvestments() {
 		return investments;
@@ -91,7 +95,15 @@ public class Account {
 	}
 	
 	public void removeOwner(Person person) {
-		owners.remove(person);
+		for (Person p : owners) {
+			if (p.getUserName().equals(person.getUserName()))
+				owners.remove(p);
+		}
+	}
+	
+	@Override
+	public String toString() {
+		return "Account name: " + this.name + " Manager: " + this.manager;
 	}
 
 }

@@ -62,4 +62,29 @@ public class AccountServiceImpl implements AccountService {
 		this.accountDao = accountDao;
 	}
 
+	@Override
+	public void joinAccount(Person person, Integer aid) {
+		accountDao.insertOwnerById(person, aid);
+	}
+
+	@Override
+	public void quitAccount(Person person, Integer aid) {
+		accountDao.removeOwnerById(person, aid);
+	}
+
+	@Override
+	public void persistAccount(Account account) {
+		accountDao.saveAccount(account);
+	}
+
+	@Override
+	public List<Account> getAccountsByManager(Person manager) {
+		return accountDao.getAccountsByManager(manager);
+	}
+
+	@Override
+	public Account findAccountById(Integer id) {
+		return accountDao.findById(id);
+	}
+
 }
