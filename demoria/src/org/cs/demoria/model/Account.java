@@ -105,5 +105,13 @@ public class Account {
 	public String toString() {
 		return "Account name: " + this.name + " Manager: " + this.manager;
 	}
+	
+	public void addInvestment(Investment inv) {
+		investments.add(inv);
+	}
+	
+	public void removeInvestment(Investment inv) {
+		investments.remove(inv);
+	}
 
 }

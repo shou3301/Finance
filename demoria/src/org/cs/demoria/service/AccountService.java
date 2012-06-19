@@ -9,6 +9,8 @@ import org.cs.demoria.model.Person;
 
 public interface AccountService {
 	
+	public Set<Account> getAccountByUserId(Integer id);
+	
 	public Account findAccountById(Integer id);
 	
 	public void persistAccount(Account account);
@@ -18,6 +20,8 @@ public interface AccountService {
 	public void joinAccount(Person person, String accountName);
 	
 	public void quitAccount(Person person, String accountName);
+	
+	public void quitAccountById(Integer aid, Integer uid);
 	
 	public void joinAccount(Person person, Integer aid);
 	

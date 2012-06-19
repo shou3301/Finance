@@ -6,6 +6,7 @@ import java.util.Set;
 import org.cs.demoria.model.Account;
 import org.cs.demoria.model.Investment;
 import org.cs.demoria.model.Person;
+import org.cs.demoria.model.Product;
 
 public interface AccountDao {
 	
@@ -34,5 +35,11 @@ public interface AccountDao {
 	public Set<Person> getOwnersById(Integer id);
 	
 	public List<Account> getAllAccount();
+	
+	public Set<Account> gerUserAccountByUserId(Integer id);
+	
+	public void removeUserById(Integer aid, Integer uid);
+	
+	public void insertInvestmentById(Integer aid, Investment investment);
 
 }

@@ -29,9 +29,32 @@ public class AccountController {
 	private AccountService accountService;
 	private PersonService personService;
 	
+	@RequestMapping(value="/{uname}/accounts", method=RequestMethod.GET)
+	public String showUsersAccount(@PathVariable("uname") String uname,
+			HttpSession session, Model model) {
+		
+		Set<Account> userAccounts = accountService.getAccountByUserId(
+				((Person)session.getAttribute("currentUser")).getId());
+		
+		model.addAttribute("accounts", userAccounts);
+		
+		return "person/accounts";
+	}
+	
 	@RequestMapping(value="/account/create", method=RequestMethod.GET)
 	public AccountCreateForm createAccountForm() {
 		return new AccountCreateForm();
+	}
+	
+	@RequestMapping(value="/{aid}/remove/{uid}", method=RequestMethod.GET)
+	public String removeUserFromAccount(@PathVariable("aid") Integer aid, 
+			@PathVariable("uid") Integer uid, HttpSession session, Model model) {
+		
+		accountService.quitAccountById(aid, uid);
+		
+		String managerId = ((Person)session.getAttribute("currentUser")).getId().toString();
+		
+		return "redirect:/" + managerId + "/" + aid.toString() + "/manage";
 	}
 	
 	@RequestMapping(value="/account/create", method=RequestMethod.POST)
@@ -45,7 +68,7 @@ public class AccountController {
 		
 		accountService.persistAccount(account);
 		
-		return manager.getUserName() + "/home";
+		return "redirect:/" + manager.getUserName() + "/home";
 	}
 	
 	@RequestMapping(value="/{uname}/manage", method=RequestMethod.GET)

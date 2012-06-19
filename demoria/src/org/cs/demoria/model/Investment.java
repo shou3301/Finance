@@ -76,5 +76,9 @@ public class Investment {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
+	public String toString() {
+		return this.id + " " + this.initUnitPrice + " " + this.transactionDate;
+	}
 
 }

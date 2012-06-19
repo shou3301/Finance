@@ -1,6 +1,7 @@
 package org.cs.demoria.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.cs.demoria.service.ProductService;
 import org.springframework.stereotype.Controller;

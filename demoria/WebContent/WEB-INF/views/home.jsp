@@ -17,6 +17,7 @@
 		<li><a href="/demoria/account/create">Create accounts</a></li>
 		<li><a href="/demoria/${uname}/manage">Manage your accounts</a></li>
 		<li><a href="/demoria/accounts">Show all accounts</a></li>
+		<li><a href="/demoria/logout">Logout</a></li>
 	</ul>
 </body>
 </html>

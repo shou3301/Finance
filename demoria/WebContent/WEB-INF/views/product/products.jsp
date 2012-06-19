@@ -30,7 +30,7 @@
 				<td>${product.description}</td>
 				<td>${product.managementFee}</td>
 				<%-- <td><a href="/demoria/${account.key.id}/owners">owners</a></td> --%>
-				<td>OP</td>
+				<td><a href="/demoria/${product.id}/invest">Invest</a></td>
 			</tr>
 		</c:forEach>
 	</table>

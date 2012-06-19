@@ -76,6 +76,18 @@ public class PersonController {
 			return "loginerror";
 	}
 	
+	@RequestMapping(value="logout", method=RequestMethod.GET)
+	public String logout(HttpSession session, Model model) {
+		
+		Person person = (Person)session.getAttribute("currentUser");
+		
+		model.addAttribute("uname", person.getUserName());
+		
+		session.removeAttribute("currentUser");
+		
+		return "logout";
+	}
+	
 	@RequestMapping(value="/{uname}/home", method=RequestMethod.GET)
 	public String showHome(@PathVariable("uname") String uname, Model model) {
 		model.addAttribute("uname", uname);

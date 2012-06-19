@@ -53,6 +53,7 @@ public class Person {
 	private Address address;
 	
 	@ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE},
+			fetch=FetchType.EAGER,
 			mappedBy="owners")
 	private Set<Account> accountList = new HashSet<Account>();
 	

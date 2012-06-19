@@ -11,6 +11,7 @@ import org.cs.demoria.model.Investment;
 import org.cs.demoria.model.Person;
 import org.cs.demoria.service.AccountService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("accountService")
 public class AccountServiceImpl implements AccountService {
@@ -85,6 +86,17 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public Account findAccountById(Integer id) {
 		return accountDao.findById(id);
+	}
+
+	@Override
+	@Transactional
+	public Set<Account> getAccountByUserId(Integer id) {
+		return accountDao.gerUserAccountByUserId(id);
+	}
+
+	@Override
+	public void quitAccountById(Integer aid, Integer uid) {
+		accountDao.removeUserById(aid, uid);
 	}
 
 }

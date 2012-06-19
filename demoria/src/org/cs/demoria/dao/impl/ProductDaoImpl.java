@@ -40,4 +40,17 @@ public class ProductDaoImpl implements ProductDao {
 		this.sessionFactory = sessionFactory;
 	}
 
+	@Override
+	public Product findProductById(Integer id) {
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		
+		Query query = session.createQuery("select p from Product p where p.id = :id").setParameter("id", id);
+		Product product = (Product)query.uniqueResult();
+		
+		session.getTransaction().commit();
+				
+		return product;
+	}
+
 }

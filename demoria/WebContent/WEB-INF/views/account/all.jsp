@@ -17,6 +17,7 @@
 			<thead>
 				<th>Id</th>
 				<th>Name</th>
+				<th>Manager</th>
 				<th>Owner</th>
 				<th>Investments</th>
 				<th>Operations</th>
@@ -29,6 +30,7 @@
 			<tr>
 				<td>${account.key.id}</td>
 				<td>${account.key.name}</td>
+				<td>${account.key.manager.userName}</td>
 				<td><a href="/demoria/${account.key.id}/owners">owners</a></td>
 				<td><a href="/demoria/${account.key.id}/investments">investments</a></td>
 				<td>

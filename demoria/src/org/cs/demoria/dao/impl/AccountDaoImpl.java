@@ -9,6 +9,7 @@ import org.cs.demoria.dao.AccountDao;
 import org.cs.demoria.model.Account;
 import org.cs.demoria.model.Investment;
 import org.cs.demoria.model.Person;
+import org.cs.demoria.model.Product;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -197,6 +198,53 @@ public class AccountDaoImpl implements AccountDao {
 		session.getTransaction().commit();
 		
 		return accounts;
+	}
+
+	@Override
+	public Set<Account> gerUserAccountByUserId(Integer id) {
+
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		
+		Query query = session.createQuery("Select p from Person p where p.id = :id").setParameter("id", id);
+		Person person = (Person) query.uniqueResult();
+		
+		session.getTransaction().commit();
+		
+		return person.getAccountList();
+		
+	}
+
+	@Override
+	public void removeUserById(Integer aid, Integer uid) {
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		
+		Query query = session.createQuery("Select a from Account a where a.id = :id").setParameter("id", aid);
+		Account account = (Account) query.uniqueResult();
+		for (Person person : account.getOwners()) {
+			if (person.getId() == uid) {
+				account.removeOwner(person);
+				break;
+			}
+		}
+		
+		session.getTransaction().commit();
+	}
+
+	@Override
+	public void insertInvestmentById(Integer aid, Investment investment) {
+		
+		System.out.println(investment);
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		
+		Query query = session.createQuery("Select a from Account a where a.id = :id").setParameter("id", aid);
+		Account account = (Account) query.uniqueResult();
+		account.addInvestment(investment);
+		//session.update(account);
+		
+		session.getTransaction().commit();		
 	}
 
 }

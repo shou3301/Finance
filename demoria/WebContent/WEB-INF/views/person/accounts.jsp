@@ -6,31 +6,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Insert title here</title>
+<title>Your accounts</title>
 </head>
 <body>
-<h1>Manage Account ${account.name}</h1>
-
-<h2>Add investments</h2>
-<a href="/demoria/products">Check out available products</a>
-
-<h2>Manage Account Investors</h2>
+<h1>Your Accounts</h1>
 	<table width="800px">
 		<tr>
 			<thead>
-				<th>Owner Id</th>
-				<th>Owner Name</th>
-				<th>Operations</th>
+				<th>Id</th>
+				<th>Name</th>
+				<th>Owner</th>
+				<th>Investments</th>
 				<th />
 				<th />
 				<th />
 			</thead>
 		</tr>
-		<c:forEach items="${account.owners}" var="owner">
+		<c:forEach items="${accounts}" var="account">
 			<tr>
-				<td>${owner.id}</td>
-				<td>${owner.userName}</td>
-				<td><a href="/demoria/${account.id}/remove/${owner.id}">remove</a></td>
+				<td>${account.id}</td>
+				<td>${account.name}</td>
+				<td><a href="/demoria/${account.id}/owners">owners</a></td>
+				<td><a href="/demoria/${account.id}/investments">investments</a></td>
 			</tr>
 		</c:forEach>
 	</table>
