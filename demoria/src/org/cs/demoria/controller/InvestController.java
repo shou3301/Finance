@@ -36,7 +36,7 @@ public class InvestController {
 	public String makeInvestment(InvestForm investForm, @PathVariable("pid") Integer pid,
 			HttpSession session, Model model) {
 		
-		investService.makeInvestment(pid, investForm.getAccountId());
+		investService.makeInvestment(pid, investForm.getAccountId(), investForm.getAmount());
 		
 		return "invest/success";
 	}

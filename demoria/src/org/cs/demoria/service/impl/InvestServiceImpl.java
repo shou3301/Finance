@@ -22,11 +22,11 @@ public class InvestServiceImpl implements InvestService {
 	
 	@Override
 	@Transactional
-	public void makeInvestment(Integer pid, Integer aid) {
+	public void makeInvestment(Integer pid, Integer aid, Double amount) {
 		Product product = productDao.findProductById(pid);
 		Investment investment = new Investment();
 		investment.setInitUnitPrice(10.0);
-		investment.setUnit(20.0);
+		investment.setUnit(amount);
 		investment.setTransactionDate(new Date());
 		investment.setProduct(product);
 		

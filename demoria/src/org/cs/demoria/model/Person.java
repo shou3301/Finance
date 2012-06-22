@@ -29,10 +29,12 @@ public class Person {
 	private Integer id;
 	
 	@NotNull
+	@Pattern(regexp = ".+", message = "First name must not be empty!")
 	@Column(name="FIRST_NAME")
 	private String firstName;
 	
 	@NotNull
+	@Pattern(regexp = ".+", message = "Last name must not be empty!")
 	@Column(name="LAST_NAME")
 	private String lastName;
 	
@@ -41,13 +43,16 @@ public class Person {
 	private String userName;
 	
 	@NotNull
+	@Pattern(message = "Email invalid", regexp = "[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
 	@Column(name="EMAIL")
 	private String email;
 
 	@NotNull
+	@Pattern(regexp = ".+", message = "Password must not be empty!")
 	@Column(name="PASSWORD")
 	private String password;
 	
+	@Valid
 	@NotNull
 	@Embedded
 	private Address address;

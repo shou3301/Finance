@@ -11,6 +11,7 @@
 <title>Make Investment</title>
 </head>
 <body>
+<jsp:directive.include file="/WEB-INF/views/header.jsp" />
 	<h1>Choose your account and make your investment</h1>
 
 	<form:form modelAttribute="investForm" method="POST"
@@ -20,6 +21,8 @@
 				<form:option value="${account.id}">${account.name}</form:option>
 			</c:forEach>
 		</form:select>
+		<form:label path="amount">Amount</form:label>
+		<form:input type="text" path="amount" />
 		<input type="submit" value="Submit" name="submit" />
 	</form:form>
 </body>

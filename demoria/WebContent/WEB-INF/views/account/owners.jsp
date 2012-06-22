@@ -9,6 +9,7 @@
 <title>Owners</title>
 </head>
 <body>
+<jsp:directive.include file="/WEB-INF/views/header.jsp" />
 	<h1>Owners</h1>
 	<table width="600px">
 		<tr>

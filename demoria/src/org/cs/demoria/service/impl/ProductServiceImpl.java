@@ -28,4 +28,9 @@ public class ProductServiceImpl implements ProductService {
 		this.productDao = productDao;
 	}
 
+	@Override
+	public Product findProductById(Integer pid) {
+		return productDao.findProductById(pid);
+	}
+
 }

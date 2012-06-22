@@ -9,6 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<jsp:directive.include file="/WEB-INF/views/header.jsp" />
 <h1>Manage Account ${account.name}</h1>
 
 <h2>Add investments</h2>

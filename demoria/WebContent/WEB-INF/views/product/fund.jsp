@@ -1,3 +1,4 @@
+<jsp:directive.include file="/WEB-INF/views/includes.jsp" />
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -5,10 +6,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Invest Successfully</title>
+<title>${product.name}</title>
 </head>
 <body>
-<jsp:directive.include file="/WEB-INF/views/header.jsp" />
-	<h1>Invest Successfully!</h1>
+	<h1>${product.name}</h1>
+	<ul>
+		<li>Name: ${product.name}</li>
+		<li>Description: ${product.description}</li>
+		<li>Management Fee: ${product.managementFee}</li>
+		<li>Distribution: ${product.distribution}</li>
+		<li>Current Unit Price: ${product.currentUnitPrice}</li>
+	</ul>
 </body>
 </html>

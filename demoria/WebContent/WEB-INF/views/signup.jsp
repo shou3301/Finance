@@ -11,6 +11,8 @@
 <title>Sign up</title>
 </head>
 <body>
+	<%-- <b color="red">${error}</b> --%>
+	<font face="verdana" color="red">${error}</font> 
 	<f:view>
 		<form:form modelAttribute="signupForm" method="POST"
 			action="/demoria/signup">

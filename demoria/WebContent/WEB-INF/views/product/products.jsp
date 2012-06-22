@@ -26,7 +26,7 @@
 		<c:forEach items="${products}" var="product">
 			<tr>
 				<td>${product.id}</td>
-				<td>${product.name}</td>
+				<td><a href="/demoria/product/${product.id}">${product.name}</a></td>
 				<td>${product.description}</td>
 				<td>${product.managementFee}</td>
 				<%-- <td><a href="/demoria/${account.key.id}/owners">owners</a></td> --%>

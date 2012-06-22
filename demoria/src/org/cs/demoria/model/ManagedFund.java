@@ -8,6 +8,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="MANAGED_FUND")
@@ -20,6 +21,7 @@ public class ManagedFund extends Product {
 	private String fundId;
 	
 	@NotNull
+	@Size(min = 0, max = 15)
 	@Column(name="DISTRIBUTION")
 	private Double distribution;
 	

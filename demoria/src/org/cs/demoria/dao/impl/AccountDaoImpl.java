@@ -222,12 +222,16 @@ public class AccountDaoImpl implements AccountDao {
 		
 		Query query = session.createQuery("Select a from Account a where a.id = :id").setParameter("id", aid);
 		Account account = (Account) query.uniqueResult();
+		Person p = null;
 		for (Person person : account.getOwners()) {
 			if (person.getId() == uid) {
-				account.removeOwner(person);
+				//account.removeOwner(person);
+				p = person;
 				break;
 			}
 		}
+		
+		account.removeOwner(p);
 		
 		session.getTransaction().commit();
 	}
@@ -242,7 +246,7 @@ public class AccountDaoImpl implements AccountDao {
 		Query query = session.createQuery("Select a from Account a where a.id = :id").setParameter("id", aid);
 		Account account = (Account) query.uniqueResult();
 		account.addInvestment(investment);
-		//session.update(account);
+		session.merge(account);
 		
 		session.getTransaction().commit();		
 	}

@@ -2,6 +2,7 @@ package org.cs.demoria.controller;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 //@RequestMapping("/person/**")
@@ -27,6 +27,7 @@ public class PersonController {
 	
 	private PersonService personService;
 	private AccountService accountService;
+	private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	@ModelAttribute("signupForm")
@@ -36,27 +37,45 @@ public class PersonController {
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signup(SignupForm signupForm, BindingResult result,
-			ModelMap model) {
+			HttpSession session, ModelMap model) {
 		
-		if (signupForm.getPassword1().equals(signupForm.getPassword2())) {
-			Address addr = new Address();
-			addr.setCity(signupForm.getCity());
-			addr.setState(signupForm.getState());
-			addr.setStreetName(signupForm.getStreetName());
-			addr.setStreetNum(signupForm.getStreetNum());
-			addr.setZipCode(signupForm.getZipcode());
-			Person person = new Person();
-			person.setUserName(signupForm.getUserName());
-			person.setAddress(addr);
-			person.setEmail(signupForm.getEmail());
-			person.setFirstName(signupForm.getFirstName());
-			person.setLastName(signupForm.getLastName());
-			person.setPassword(signupForm.getPassword1());
-			
-			personService.add(person);
+		if (result.hasErrors())
+			return "redirect:/signup";
+		else {
+			if (signupForm.getPassword1().equals(signupForm.getPassword2())) {
+				Address addr = new Address();
+				addr.setCity(signupForm.getCity());
+				addr.setState(signupForm.getState());
+				addr.setStreetName(signupForm.getStreetName());
+				addr.setStreetNum(signupForm.getStreetNum());
+				addr.setZipCode(signupForm.getZipcode());
+				Person person = new Person();
+				person.setUserName(signupForm.getUserName());
+				person.setAddress(addr);
+				person.setEmail(signupForm.getEmail());
+				person.setFirstName(signupForm.getFirstName());
+				person.setLastName(signupForm.getLastName());
+				person.setPassword(signupForm.getPassword1());
+				
+				for (ConstraintViolation<Person> constraint : validator.validate(person)) {
+					//System.out.println(constraint.getPropertyPath().toString() + "" + constraint.getMessage());
+					//result.rejectValue(constraint.getPropertyPath().toString(), "", constraint.getMessage());
+					model.addAttribute("error", constraint.getMessage());
+					return "signup";
+				}
+				
+				personService.add(person);
+				
+				session.setAttribute("currentUser", person);
+				
+				return "redirect:/home";
+			}
+			else {
+				model.addAttribute("error", "Password not match!");
+				return "signup";
+			}
 		}
 		
-		return "redirect:" + signupForm.getUserName() + "/home";
 	}
 	
 	@RequestMapping(value="login", method=RequestMethod.GET)
@@ -70,7 +89,7 @@ public class PersonController {
 			ModelMap model) {
 		if (personService.loginCheck(loginForm.getUserName(), loginForm.getPassword())) {
 			session.setAttribute("currentUser", personService.findByName(loginForm.getUserName()));
-			return "redirect:/" + loginForm.getUserName() + "/home";
+			return "redirect:/home";
 		}
 		else
 			return "loginerror";
@@ -88,9 +107,9 @@ public class PersonController {
 		return "logout";
 	}
 	
-	@RequestMapping(value="/{uname}/home", method=RequestMethod.GET)
-	public String showHome(@PathVariable("uname") String uname, Model model) {
-		model.addAttribute("uname", uname);
+	@RequestMapping(value="home", method=RequestMethod.GET)
+	public String showHome(HttpSession session, Model model) {
+		model.addAttribute("uname", ((Person)session.getAttribute("currentUser")).getUserName());
 		return "home";
 	}
 

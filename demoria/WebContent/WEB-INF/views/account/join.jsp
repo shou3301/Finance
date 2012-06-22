@@ -8,6 +8,7 @@
 <title>Join Account</title>
 </head>
 <body>
+<jsp:directive.include file="/WEB-INF/views/header.jsp" />
 	<h1>You ${uname} have successfully joined account ${aid}!</h1>
 	<a href="/demoria/accounts">back to all accounts</a>
 </body>

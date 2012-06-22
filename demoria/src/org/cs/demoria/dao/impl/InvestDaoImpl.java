@@ -20,7 +20,9 @@ public class InvestDaoImpl implements InvestDao {
 		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
 
-		session.save(investment);
+		//session.evict(investment.getProduct());
+		session.merge(investment);
+		//session.flush();
 		
 		session.getTransaction().commit();
 	}

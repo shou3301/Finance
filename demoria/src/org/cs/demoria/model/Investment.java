@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -22,10 +23,12 @@ public class Investment {
 	private Integer id;
 	
 	@NotNull
+	@Min(value = 1, message = "You must buy 1 or more units")
 	@Column(name="UNIT")
 	private Double unit;
 	
 	@NotNull
+	@Min(value = 0, message = "Unit price should be positive")
 	@Column(name="INIT_UNIT_PRICE")
 	private Double initUnitPrice;
 	

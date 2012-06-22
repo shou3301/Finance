@@ -48,6 +48,7 @@ public class PersonDaoImpl implements PersonDao {
 		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
 		session.save(person);
+		
 		session.getTransaction().commit();
 		
 	}

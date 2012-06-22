@@ -1,11 +1,28 @@
 package org.cs.demoria.model;
 
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+@Embeddable
 public class Address {
 
+	@NotNull
+	@Pattern(regexp = ".+", message = "Street name must not be empty!")
 	private String streetName;
+	
+	@NotNull
+	@Pattern(regexp = ".+", message = "Street number must not be empty!")
 	private String streetNum;
+	
+	@NotNull
+	@Pattern(regexp = ".+", message = "City must not be empty!")
 	private String city;
+	
+	@NotNull
+	@Pattern(regexp = ".+", message = "Zip code must not be empty!")
 	private String zipCode;
+	
 	private String state;
 
 	public String getStreetName() {

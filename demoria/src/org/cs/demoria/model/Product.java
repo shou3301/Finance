@@ -9,6 +9,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="PRODUCT")
@@ -21,6 +23,8 @@ public abstract class Product {
 	private Integer id;
 	
 	@NotNull
+	@Size(min = 1, max = 30)
+	@Pattern(regexp = ".+", message = "Name must not be empty!")
 	@Column(name="NAME")
 	private String name;
 	

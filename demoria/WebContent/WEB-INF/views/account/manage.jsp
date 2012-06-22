@@ -9,6 +9,7 @@
 <title>Manage Accounts</title>
 </head>
 <body>
+<jsp:directive.include file="/WEB-INF/views/header.jsp" />
 <h1>Manage Accounts</h1>
 	<table width="800px">
 		<tr>
