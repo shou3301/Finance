@@ -14,7 +14,7 @@
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
-
+	
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
 	
@@ -38,12 +38,47 @@
 	</beans:bean> -->
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean
+  		class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" />
+	
+	<beans:bean
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<beans:property name="exceptionMappings">
+			<beans:props>
+				<beans:prop key="java.lang.Exception">error</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+	
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
 	<context:component-scan base-package="org.cs.demoria" />
+    
+    <interceptors>
+    	<interceptor>
+        	<mapping path="/home" />
+        	<beans:bean class="org.cs.demoira.interceptor.AuthenticateHandler" />
+    	</interceptor>
+    	<interceptor>
+        	<mapping path="/**/invest/*" />
+        	<beans:bean class="org.cs.demoira.interceptor.AuthenticateHandler" />
+    	</interceptor>
+    	<interceptor>
+        	<mapping path="/**/manage" />
+        	<beans:bean class="org.cs.demoira.interceptor.AuthenticateHandler" />
+    	</interceptor>
+    	<interceptor>
+        	<mapping path="/**/accounts" />
+        	<beans:bean class="org.cs.demoira.interceptor.AuthenticateHandler" />
+    	</interceptor>
+    	<interceptor>
+        	<mapping path="/**/products" />
+        	<beans:bean class="org.cs.demoira.interceptor.AuthenticateHandler" />
+    	</interceptor>
+	</interceptors>
 	
 	<beans:import resource="hibernate-context.xml"/>
 		

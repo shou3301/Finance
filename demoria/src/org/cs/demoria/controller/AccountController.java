@@ -68,7 +68,7 @@ public class AccountController {
 		
 		accountService.persistAccount(account);
 		
-		return "redirect:/" + manager.getUserName() + "/home";
+		return "redirect:/home";
 	}
 	
 	@RequestMapping(value="/{uname}/manage", method=RequestMethod.GET)
